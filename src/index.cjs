@@ -1,4 +1,4 @@
-const { TelegramClient } = require("telegram");
+const { Api, TelegramClient } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 const input = require("input"); // npm i input
 require("dotenv").config();
@@ -17,7 +17,14 @@ const stringSession = new StringSession(process.env.TOKEN_SESSION); // fill this
       await input.text("Please enter the code you received: "),
     onError: (err) => console.log(err),
   });
-  console.log("You should now be connected.");
-  console.log(client.session.save()); // Save this string to avoid logging in again
-  await client.sendMessage("me", { message: "Hello!" });
+  await client.connect();
+
+  client.addEventHandler(async event => {
+    const message = event.message
+    if(message) {
+      if((process.env.GROUPS).includes(message.peerId.chatId.value)){
+        console.log(message.message)
+      }
+    }
+  }, console.log("testado"));
 })();
