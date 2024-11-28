@@ -3,7 +3,7 @@ const { StringSession } = require("telegram/sessions");
 const input = require("input"); // npm i input
 require("dotenv").config();
 
-const stringSession = new StringSession(""); // fill this later with the value from session.save()
+const stringSession = new StringSession(process.env.TOKEN_SESSION); // fill this later with the value from session.save()
 
 (async () => {
   console.log("Loading interactive example...");
